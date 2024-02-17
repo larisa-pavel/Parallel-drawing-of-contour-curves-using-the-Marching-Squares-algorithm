@@ -1,0 +1,39 @@
+Incepand cu functia main, am alocat dinamic variablele in care preiau imaginea
+initiala (image), rescalez imaginea initiala (new_image), creez gridul noii
+imagini (grid) si conturul initial (contour_map), dupa care am extras numarul
+thread-urilor din argumentele date functiei main. La linia 29 mi-am definit o
+structura pentru a retine/ pointa la argumentele pe care urmeaza sa le folosesc
+mai departe (my_args), si cu ajutorul careia am creat un vector de P
+structuri (o structura pentru fiecare thread) (my_thread), dupa care am creat
+si un vector de P thread-uri (threads). Am creat si am initializat bariera
+(my_barrier), dupa care, am initializat fiecare variabila din structura
+fiecarui index al vectorului my_thread si am creat cate un thread. Dupa ce am
+creat toate thread-urile, apelez pentru fiecare thread pthread_join() pentru a
+ma asigura ca threadul apelant se blocheaza pana cand celalalt fir de executie
+isi termina procesarea. La final am transmis imaginea finala obtinuta, am
+dezalocat memoria si am distrus bariera.
+
+In functia "my_function", pe care am apelat-o la creerea fiecarui thread
+(linia 256), si pe care am creat-o la linia 185, am convertit argumentul primit
+la tipul structurii (my args) si dupa care am apelat functiile de rescale_image
+, sample_grid si march, iar dupa fiecare am pus un pthread_barrier_wait(), iar
+la final am apleat implicit pthread_exit(). Functiilede rescale_image()
+sample_grid() si march() sunt modificate fata de cele din codul initial, cu
+motivul ca am vrut sa dau ca argument variabilele necesare fiecarei functii si
+sa sa pastrez modificarile facute in functii folosindu-ma de pointeri. Ceea ce
+e schimbat efectiv in functii este, in primul rand, stergerea alocarilor (era
+ineficient sa aloc la fiecare thread o noua variabila dinamic) si am
+paralelizat restul functiei folosindu-ma de un index de start si unul de end,
+asa cum ne-a fost prezentat la laborator. In plus am creat o functie de minim
+care ma ajuta sa calculez start-ul si end-ul (nu mi-a placut cum era formulata
+cea deja data).
+-------------------------------------------
+                 \
+                  \
+      ___
+  _.-|   |          |\__/,|   (`\
+ {   |   |          |o o  |__ _) )
+  "-.|___|        _.( T   )  `  /
+   .--'-`-.     _((_ `^--' /_<  \
+ .+|______|__.-||__)`-'(((/  (((/
+
